@@ -9,7 +9,7 @@ import UserPresence from "./user-presence";
 
 export default function Sidebar() {
   return (
-    <div className="w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 flex flex-col min-h-screen max-h-screen relative">
+    <div className="hidden lg:flex lg:flex-col min-w-[300px] max-w-[300px] w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 min-h-screen max-h-screen relative">
       <Image src="/logo.png" alt="Logo streamify" width={300} height={300} />
 
       <div className="flex flex-col flex-1 justify-between p-4">
