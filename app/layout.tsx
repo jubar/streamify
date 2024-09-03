@@ -17,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="flex min-h-screen p-0">
+      <body className={`overflow-hidden ${inter.className}`}>
+        <main className="flex flex-1 h-screen w-full p-0 overflow-hidden">
           <Sidebar />
-          <div className="border-l-[1px] border-l-pink-200">{children}</div>
+          <div className="border-l-[1px] border-l-pink-200 w-full min-h-screen overflow-y-auto">
+            {children}
+          </div>
         </main>
       </body>
     </html>

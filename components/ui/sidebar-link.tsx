@@ -22,7 +22,7 @@ export default function SidebarLink({ icon, label, href }: SidebarLinkProps) {
   return (
     <Link
       href={href}
-      className={`text-lg flex flex-1 gap-2 items-center p-2 rounded-md ${
+      className={`text-md flex flex-1 gap-2 items-center p-2 rounded-md ${
         isCurrentPath ? activeStyle : hoverStyle
       }`}
     >

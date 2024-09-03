@@ -8,15 +8,8 @@ import SidebarLink from "./sidebar-link";
 import UserPresence from "./user-presence";
 
 export default function Sidebar() {
-  const items = [
-    { key: "player", label: "Home" },
-    { key: "dashboard", label: "Dashboard" },
-    { key: "library", label: "My Library" },
-    { key: "settings", label: "Settings" },
-  ];
-
   return (
-    <div className="w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 flex flex-col min-h-screen max-h-screen ">
+    <div className="w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 flex flex-col min-h-screen max-h-screen relative">
       <Image src="/logo.png" alt="Logo streamify" width={300} height={300} />
 
       <div className="flex flex-col flex-1 justify-between p-4">

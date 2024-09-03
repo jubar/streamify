@@ -8,14 +8,14 @@ export default function UserPresence() {
         <Link
           href="https://linkedin.com/in/julio-barrios-uy"
           size="md"
-          className="text-white/90 text-md mt-1 ml-1"
+          className="text-white/90 text-md mt-1 ml-1 drop-shadow-sm"
           isExternal
         >
           @julio-barrios-uy
         </Link>
       }
       classNames={{
-        name: "text-lg text-white/90 ml-1",
+        name: "text-lg text-white/90 ml-1 drop-shadow-sm",
       }}
       avatarProps={{
         isBordered: true,
