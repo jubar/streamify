@@ -12,7 +12,15 @@ interface SidebarLinkProps {
 export default function SidebarLink({ icon, label, href }: SidebarLinkProps) {
   const pathname = usePathname();
 
-  const isCurrentPath = pathname === href;
+  let isCurrentPath = false;
+
+  if (href === "/" && pathname === href) {
+    isCurrentPath = true;
+  }
+
+  if (href !== "/" && pathname.startsWith(href)) {
+    isCurrentPath = true;
+  }
 
   const hoverStyle =
     "hover:bg-gradient-to-t hover:from-white/20 hover:to-white/10";

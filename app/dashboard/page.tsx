@@ -8,16 +8,11 @@ import {
   Chip,
   Image,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   return (
     <div className="flex flex-col w-full min-h-screen px-8 py-4">
-      <h1>Dashboard page, the dashboard</h1>
-
-      <span>
-        Total users & active users | Total streams | revenue | Top artists{" "}
-      </span>
-
       <div className="gap-6 flex flex-1 w-full ">
         <div className="flex flex-col gap-6 flex-1">
           <div className="grid grid-cols-3 gap-6">
@@ -32,6 +27,8 @@ export default function DashboardPage() {
               </CardHeader>
               <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                 <Button
+                  as={Link}
+                  href="/dashboard/users"
                   className="text-tiny text-white bg-black/20"
                   variant="flat"
                   color="default"
@@ -66,6 +63,8 @@ export default function DashboardPage() {
 
               <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                 <Button
+                  as={Link}
+                  href="/dashboard/streams"
                   className="text-tiny text-white bg-black/20"
                   variant="flat"
                   color="default"
@@ -86,7 +85,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="flex flex-col">
-          <Card isFooterBlurred className="flex-2 h-[350px]">
+          <Card isFooterBlurred className="flex-2 h-[350px] drop-shadow-lg">
             <CardHeader className="absolute z-10 top-1 flex-col items-start">
               <h4 className="text-white/90 font-medium text-2xl drop-shadow-xl">
                 Top Artist
