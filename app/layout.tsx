@@ -1,3 +1,4 @@
+import Sidebar from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className="flex min-h-screen p-0">
+          <Sidebar />
+          <div className="border-l-[1px] border-l-pink-200">{children}</div>
+        </main>
+      </body>
     </html>
   );
 }
