@@ -4,21 +4,27 @@ import VerifiedIcon from "../icons/verified";
 interface TopSongItemProps {
   song: string;
   artist: string;
-  imageUrl: string;
+  albumCover: string;
   isVerified: boolean;
-  plays: number;
+  listens: number;
 }
 
 export default function TopSongItem({
   song,
   artist,
-  imageUrl,
+  albumCover,
   isVerified,
-  plays,
+  listens,
 }: TopSongItemProps) {
   return (
     <div className="flex flex-1 rounded-sm">
-      <Avatar isBordered radius="sm" className="w-20 h-20" src={imageUrl} />
+      <Avatar
+        isBordered
+        radius="sm"
+        className="w-20 h-20"
+        alt="Album cover image"
+        src={albumCover}
+      />
       <div className="flex flex-col flex-1 ml-4 justify-between">
         <div className="flex flex-col">
           <div className="flex flex-1 justify-between">
@@ -41,7 +47,7 @@ export default function TopSongItem({
           </span>
         </div>
         <span className="text-tiny text-violet-500">
-          {plays.toLocaleString()} listens
+          {listens.toLocaleString()} listens
         </span>
       </div>
     </div>

@@ -18,7 +18,12 @@ export default function DashboardPage() {
 
         <div className="flex flex-col">
           <div className="w-full sm:w-2/3 lg:w-3/4 xl:w-full">
-            <TopArtist />
+            <TopArtist
+              artist="La Tabare"
+              song="Blues de los esclavos de ahora"
+              albumCover="https://i.scdn.co/image/ab67616d0000b273c27bfe8bccec8a1f7d3b2469"
+              artistAvatar="https://i.scdn.co/image/ab67616100005174ecfbc2083dada0374928ad98"
+            />
           </div>
           <TopSongs />
         </div>

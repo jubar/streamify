@@ -23,7 +23,7 @@ export default function Sidebar() {
 
       <div className="flex flex-col flex-1 justify-between p-4">
         <div className="flex flex-col flex-1">
-          <div className="flex flex-col gap-2">
+          <div role="navigation" className="flex flex-col gap-2">
             <SidebarLink icon={<MusicIcon />} label="Home" href="/" />
             <SidebarLink
               icon={<LibraryIcon />}
@@ -47,7 +47,11 @@ export default function Sidebar() {
 
         <div>
           <Divider className="mb-5 bg-white/30" />
-          <UserPresence />
+          <UserPresence
+            userName="Julio Barrios"
+            userImageUrl="https://www.gravatar.com/avatar/51aaaebc5b833211facbe04fbd3a7a5c.jpg?s=200"
+            linkedinUser="julio-barrios-uy"
+          />
         </div>
       </div>
     </div>
