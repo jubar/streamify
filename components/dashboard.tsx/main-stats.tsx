@@ -1,4 +1,4 @@
-import StatsCard from "./stats-card";
+import StatsCard from "../ui/stats-card";
 
 export default function MainStats() {
   return (

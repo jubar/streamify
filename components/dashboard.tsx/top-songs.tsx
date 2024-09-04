@@ -3,7 +3,7 @@ import TopSongItem from "../ui/top-song-item";
 export default function TopSongs() {
   return (
     <div className="flex flex-col gap-6 mt-4">
-      <h1 className="text-xl font-bold">Top 5 songs</h1>
+      <h1 className="text-xl font-bold dark:text-slate-100">Top 5 songs</h1>
       <TopSongItem
         song="La salvación"
         artist="Arde Bogota"

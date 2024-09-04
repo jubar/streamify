@@ -1,6 +1,6 @@
 import MainStats from "@/components/dashboard.tsx/main-stats";
-import TopArtist from "@/components/dashboard.tsx/top-artist";
 import TopSongs from "@/components/dashboard.tsx/top-songs";
+import TopArtist from "@/components/ui/top-artist";
 
 export default function DashboardPage() {
   return (

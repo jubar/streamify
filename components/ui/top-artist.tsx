@@ -30,7 +30,7 @@ export default function TopArtist() {
             <p className="text-tiny text-white/80">New single from La tabare</p>
           </div>
         </div>
-        <Button radius="full" size="sm">
+        <Button radius="full" size="sm" color="secondary">
           Play now
         </Button>
       </CardFooter>

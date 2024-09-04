@@ -13,7 +13,7 @@ export default function StatsCard({
   viewAllLink,
 }: StatsCardProps) {
   return (
-    <Card className="flex-1 bg-gradient-to-tr from-blue-700/60 via-purple-300 to-pink-500/25 h-[150px] xl:h-[170px] drop-shadow-md">
+    <Card className="flex-1 bg-gradient-to-tr from-blue-400 via-purple-300 to-pink-200 dark:from-blue-300 dark:via-purple-400 dark:to-pink-300 h-[150px] xl:h-[170px] drop-shadow-md">
       <CardHeader className="absolute z-10 top-1 flex-col !items-start">
         <h3 className="text-white font-medium text-large drop-shadow-md">
           {title}

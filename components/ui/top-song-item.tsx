@@ -22,7 +22,9 @@ export default function TopSongItem({
       <div className="flex flex-col flex-1 ml-4 justify-between">
         <div className="flex flex-col">
           <div className="flex flex-1 justify-between">
-            <span className="text-lg font-semibold">{song}</span>
+            <span className="text-lg font-semibold dark:text-slate-100">
+              {song}
+            </span>
             {isVerified && (
               <Chip
                 size="sm"
@@ -34,10 +36,12 @@ export default function TopSongItem({
               </Chip>
             )}
           </div>
-          <span className="text-md text-slate-500">{artist}</span>
+          <span className="text-md text-slate-500 dark:text-stone-300">
+            {artist}
+          </span>
         </div>
         <span className="text-tiny text-violet-500">
-          {plays.toLocaleString()} plays
+          {plays.toLocaleString()} listens
         </span>
       </div>
     </div>
