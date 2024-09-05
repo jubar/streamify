@@ -8,22 +8,29 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "migrate": "prisma migrate dev"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
+    "@prisma/client": "^5.19.1",
+    "dayjs": "^1.11.13",
     "framer-motion": "^11.3.31",
     "next": "14.2.7",
+    "numbro": "^2.5.0",
     "react": "^18",
-    "react-dom": "^18",
-    "ts-node": "^10.9.2"
+    "react-dom": "^18"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20",
+    "@types/node": "^20.16.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
@@ -31,7 +38,10 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
+    "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
   }
 }

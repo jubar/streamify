@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={`overflow-hidden ${inter.className}`}>
         <main className="flex flex-1 h-screen w-full p-0 overflow-hidden">
           <Sidebar />
-          <div className="border-l-[1px] border-l-pink-200 w-full min-h-screen overflow-y-auto bg-gradient-to-tr from-purple-200 to-purple-100 dark:from-zinc-900 dark:to-zinc-800">
+          <div className="border-l-[1px] border-l-pink-200 w-full min-h-screen overflow-y-auto bg-gradient-to-tl from-violet-200 to-pink-100 dark:from-zinc-900 dark:to-zinc-800">
             {children}
           </div>
         </main>

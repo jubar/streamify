@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  email            String             @unique
+  name             String
+  linkedinUser     String             @unique
+  createdAt        DateTime           @default(now())
+  stream           Stream[]
+  UserSubscription UserSubscription[]
+}
+
+model Subscription {
+  id               Int                @id @default(autoincrement())
+  name             String
+  price            Float
+  createdAt        DateTime           @default(now())
+  UserSubscription UserSubscription[]
+}
+
+model UserSubscription {
+  id             Int          @id @default(autoincrement())
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  subscriptionId Int
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  createdAt      DateTime     @default(now())
+
+  @@unique([userId, subscriptionId], name: "user_subscription_unique")
+}
+
+model Stream {
+  id        Int      @id @default(autoincrement())
+  track     Track    @relation(fields: [trackId], references: [id])
+  trackId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+}
+
+model Artist {
+  id        Int      @id @default(autoincrement())
+  name      String
+  verified  Boolean  @default(false)
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  albums    Album[]
+}
+
+model Album {
+  id            Int      @id @default(autoincrement())
+  name          String
+  coverImageUrl String
+  releaseOn     DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  artist        Artist   @relation(fields: [artistId], references: [id])
+  artistId      Int
+  tracks        Track[]
+}
+
+model Track {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  album     Album    @relation(fields: [albumId], references: [id])
+  albumId   Int
+  stream    Stream[]
+}
