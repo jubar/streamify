@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 import artistData from "./artist-albums-tracks";
 import { subscriptions, users } from "./users-subscriptions";
 
@@ -39,7 +40,7 @@ async function main() {
             subscriptionId: basicSubscription!.id,
             createdAt: faker.date.between({
               from: "2024-01-01T00:00:00.000Z",
-              to: "2024-09-01T00:00:00.000Z",
+              to: dayjs().toISOString(),
             }),
           },
         },
@@ -57,7 +58,7 @@ async function main() {
             subscriptionId: premiumSubscription!.id,
             createdAt: faker.date.between({
               from: "2024-01-01T00:00:00.000Z",
-              to: "2024-09-01T00:00:00.000Z",
+              to: dayjs().toISOString(),
             }),
           },
         },
@@ -75,8 +76,8 @@ async function main() {
       },
       data: {
         createdAt: faker.date.between({
-          from: "2024-01-01T00:00:00.000Z",
-          to: "2024-09-01T00:00:00.000Z",
+          from: "2024-06-01T00:00:00.000Z", // I'm setting the date to June 2024 to have more data to calculate the revenue.
+          to: dayjs().toISOString(),
         }),
       },
     });
@@ -93,6 +94,30 @@ async function main() {
   }
 
   // I'll create here some streaming data for charts and cards.
+  const allUserIds = await prisma.user.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  const allTrackIds = await prisma.track.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  for (let i = 0; i < 20000; i++) {
+    await prisma.stream.create({
+      data: {
+        userId: faker.helpers.arrayElement(allUserIds).id,
+        trackId: faker.helpers.arrayElement(allTrackIds).id,
+        createdAt: faker.date.between({
+          from: "2024-01-01T00:00:00.000Z",
+          to: dayjs().toISOString(),
+        }),
+      },
+    });
+  }
 }
 
 main()

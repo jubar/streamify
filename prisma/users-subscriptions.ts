@@ -16,17 +16,17 @@ const freeUsers: Prisma.UserCreateInput[] = [];
 const basicUsers: Prisma.UserCreateInput[] = [];
 const premiumUsers: Prisma.UserCreateInput[] = [];
 
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 3000; i++) {
   premiumUsers.push({
-    email: faker.internet.email(),
+    email: `${faker.number.int(10000)}-${faker.internet.email()}`,
     name: faker.person.fullName(),
     linkedinUser: `${faker.internet.userName()}-${faker.number.int(10000)}`,
   });
 }
 
-for (let i = 0; i < 500; i++) {
+for (let i = 0; i < 4500; i++) {
   basicUsers.push({
-    email: faker.internet.email(),
+    email: `${faker.number.int(10000)}-${faker.internet.email()}`,
     name: faker.person.fullName(),
     linkedinUser: `${faker.internet.userName()}-${faker.number.int(10000)}`,
   });
@@ -34,7 +34,7 @@ for (let i = 0; i < 500; i++) {
 
 for (let i = 0; i < 1000; i++) {
   freeUsers.push({
-    email: faker.internet.email(),
+    email: `${faker.number.int(10000)}-${faker.internet.email()}`,
     name: faker.person.fullName(),
     linkedinUser: `${faker.internet.userName()}-${faker.number.int(10000)}`,
   });

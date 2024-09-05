@@ -6,6 +6,19 @@ import StatsCard from "../ui/stats-card";
 export default async function MainStats() {
   const totalUsers = await prisma.user.count();
 
+  // Prisma does not support count queries with distinct yet, so I'm using a raw query.
+  const activeDateStg = dayjs().subtract(30, "day").toISOString();
+  const totalActiveUsers: { result: number }[] =
+    await prisma.$queryRaw`SELECT COUNT(DISTINCT userId) as result FROM Stream WHERE 'createdAt' >= ${activeDateStg}`;
+
+  const totalStreamsThisMonth = await prisma.stream.count({
+    where: {
+      createdAt: {
+        gte: dayjs().subtract(30, "day").toISOString(),
+      },
+    },
+  });
+
   /**
    * This function returns the revenue of the current month or the previous month.
    * @param {boolean} thisMonth - If true, it will return the revenue of the current month. If false,
@@ -61,22 +74,26 @@ export default async function MainStats() {
     average: true,
     mantissa: 1,
   });
+  const activeUsers = numbro(totalActiveUsers[0].result.toString()).format({
+    average: true,
+    mantissa: 1,
+  });
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <StatsCard
-        title="13k active users"
+        title={`${activeUsers} active users`}
         subtitle={`from ${allUsers} total users`}
         viewAllLink="/dashboard/users"
       />
 
       <StatsCard
-        title="Revenue"
-        subtitle={`This month ${currRevenue} USD | Last month ${prevRevenue} USD`}
+        title={`$${currRevenue} Revenue this month`}
+        subtitle={`Last month, $${prevRevenue} in revenues`}
       />
 
       <StatsCard
-        title="Streams this month"
+        title={`${totalStreamsThisMonth} Streams this month`}
         subtitle="9 millions of streams from 32 countries"
         viewAllLink="/dashboard/streams"
       />
