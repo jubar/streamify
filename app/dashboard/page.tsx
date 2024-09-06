@@ -1,11 +1,50 @@
+import TopSongsChart from "@/components/charts/top-songs-chart";
+import UserGrowthChart from "@/components/charts/user-growth-chart";
 import MainStats from "@/components/dashboard.tsx/main-stats";
 import TopSongs from "@/components/dashboard.tsx/top-songs";
 import TopArtist from "@/components/ui/top-artist";
+import prisma from "@/prisma/db";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const userGrowthData = {
+    allUsers: [1, 2, 5, 8, 9, 13, 18, 20, 25, 30, 35, 40],
+    activeUsers: [1, 2, 4, 6, 8, 10, 15, 10, 16, 22, 29, 35],
+  };
+
+  const topFiveSongs = await prisma.$queryRaw`SELECT
+    track.id,
+    track.name,
+    track.url,
+    track.albumId,
+    artist.name as artist,
+    COUNT(stream.trackId) as total
+  FROM 
+    stream
+  INNER JOIN
+    track
+  ON
+    stream.trackId = track.id
+  INNER JOIN
+    album
+  ON 
+    track.albumId = album.id
+  INNER JOIN 
+    artist 
+  ON 
+    album.artistId = artist.id
+  GROUP BY
+    trackid
+  ORDER BY
+    total DESC
+  LIMIT
+    5
+`;
+
+  console.log("top five songs", topFiveSongs);
+
   return (
     <div className="flex flex-col w-full min-h-screen px-8 py-4">
-      <div className="gap-6 flex flex-col xl:flex-row flex-1 w-full ">
+      <div className="gap-6 flex flex-col xl:flex-row flex-1 w-full">
         <div className="flex flex-col gap-6 flex-1">
           <MainStats />
 
@@ -13,7 +52,11 @@ export default function DashboardPage() {
             Aca va a ir un banner
           </div>
 
-          <div>Aca van a ir los graficos</div>
+          <div className="grid grid-cols-2">
+            <UserGrowthChart chartData={userGrowthData} />
+
+            <TopSongsChart chartData={topFiveSongs} />
+          </div>
         </div>
 
         <div className="flex flex-col">

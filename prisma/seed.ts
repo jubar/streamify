@@ -26,22 +26,30 @@ async function main() {
   // Create the free users
   for (const user of users.freeUsers) {
     await prisma.user.create({
-      data: user,
+      data: {
+        ...user,
+        createdAt: faker.date.between({
+          from: "2024-01-01T00:00:00.000Z",
+          to: dayjs().toISOString(),
+        }),
+      },
     });
   }
 
   // Create the basic users
   for (const user of users.basicUsers) {
+    const createdAt = faker.date.between({
+      from: "2024-01-01T00:00:00.000Z",
+      to: dayjs().toISOString(),
+    });
     await prisma.user.create({
       data: {
         ...user,
+        createdAt,
         UserSubscription: {
           create: {
             subscriptionId: basicSubscription!.id,
-            createdAt: faker.date.between({
-              from: "2024-01-01T00:00:00.000Z",
-              to: dayjs().toISOString(),
-            }),
+            createdAt,
           },
         },
       },
@@ -50,16 +58,18 @@ async function main() {
 
   // Create the premium users
   for (const user of users.premiumUsers) {
+    const createdAt = faker.date.between({
+      from: "2024-01-01T00:00:00.000Z",
+      to: dayjs().toISOString(),
+    });
     await prisma.user.create({
       data: {
         ...user,
+        createdAt,
         UserSubscription: {
           create: {
             subscriptionId: premiumSubscription!.id,
-            createdAt: faker.date.between({
-              from: "2024-01-01T00:00:00.000Z",
-              to: dayjs().toISOString(),
-            }),
+            createdAt,
           },
         },
       },

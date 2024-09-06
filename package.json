@@ -17,6 +17,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
     "@prisma/client": "^5.19.1",
+    "chart.js": "^4.4.4",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.3.31",
     "next": "14.2.7",
