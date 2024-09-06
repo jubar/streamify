@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 import artistData from "./artist-albums-tracks";
+import { revenueMetrics, userMetrics } from "./metrics";
 import { subscriptions, users } from "./users-subscriptions";
 
 const prisma = new PrismaClient();
@@ -126,6 +127,19 @@ async function main() {
           to: dayjs().toISOString(),
         }),
       },
+    });
+  }
+
+  // Populate metric tables
+  for (const userMetric of userMetrics) {
+    await prisma.userMetrics.create({
+      data: userMetric,
+    });
+  }
+
+  for (const revenueMetric of revenueMetrics) {
+    await prisma.revenueMetrics.create({
+      data: revenueMetric,
     });
   }
 }

@@ -1,4 +1,3 @@
-import TopSongsChart from "@/components/charts/top-songs-chart";
 import UserGrowthChart from "@/components/charts/user-growth-chart";
 import MainStats from "@/components/dashboard.tsx/main-stats";
 import TopSongs from "@/components/dashboard.tsx/top-songs";
@@ -6,6 +5,18 @@ import TopArtist from "@/components/ui/top-artist";
 import prisma from "@/prisma/db";
 
 export default async function DashboardPage() {
+  const userGrowth = await prisma.userMetrics.findMany({
+    orderBy: [
+      {
+        year: "asc",
+      },
+      { month: "asc" },
+    ],
+    take: 12,
+  });
+
+  console.log("userGrowth >>>>>>>>>>", userGrowth);
+
   const userGrowthData = {
     allUsers: [1, 2, 5, 8, 9, 13, 18, 20, 25, 30, 35, 40],
     activeUsers: [1, 2, 4, 6, 8, 10, 15, 10, 16, 22, 29, 35],
@@ -52,10 +63,14 @@ export default async function DashboardPage() {
             Aca va a ir un banner
           </div>
 
-          <div className="grid grid-cols-2">
-            <UserGrowthChart chartData={userGrowthData} />
+          <div className="flex flex-1">
+            <div className="flex flex-1 max-w-[900px]">
+              <UserGrowthChart chartData={userGrowthData} />
+            </div>
 
-            <TopSongsChart chartData={topFiveSongs} />
+            {/* <TopSongsChart chartData={topFiveSongs} />
+
+            <RevenueChart /> */}
           </div>
         </div>
 

@@ -83,3 +83,31 @@ model Track {
   albumId   Int
   stream    Stream[]
 }
+
+// METRICS MODELS
+
+// In a regular application we would have a UserMetrics table in order to
+// speed up metrics and reports. Iterating over large tables with complex 
+// queries are spensive and slow. So we can use a UserMetrics table that 
+// we can keep up-to-date in real time or we can use background jobs.
+model UserMetrics {
+  id           Int @id @default(autoincrement())
+  year         Int
+  month        Int
+  totalUsers   Int
+  premiumUsers Int
+  basicUsers   Int
+  freeUsers    Int
+  activeUsers  Int
+}
+
+model RevenueMetrics {
+  id            Int   @id @default(autoincrement())
+  year          Int
+  month         Int
+  totalRevenue  Float
+  subscription  Float
+  adsRevenue    Float
+  merchandising Float
+  tickets       Float
+}
