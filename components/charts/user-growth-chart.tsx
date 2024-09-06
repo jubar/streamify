@@ -2,6 +2,7 @@
 import { Switch } from "@nextui-org/react";
 import Prisma from "@prisma/client";
 import Chart from "chart.js/auto";
+import zoomPlugin from "chartjs-plugin-zoom";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 
@@ -128,6 +129,8 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   };
 
   useEffect(() => {
+    Chart.register(zoomPlugin);
+
     if (!canvasRef.current) {
       return;
     }
@@ -183,6 +186,18 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
           title: {
             display: true,
             text: "User Metrics",
+          },
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: "x",
+              scaleMode: "x",
+            },
           },
         },
       },
