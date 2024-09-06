@@ -15,13 +15,6 @@ export default async function DashboardPage() {
     take: 12,
   });
 
-  console.log("userGrowth >>>>>>>>>>", userGrowth);
-
-  const userGrowthData = {
-    allUsers: [1, 2, 5, 8, 9, 13, 18, 20, 25, 30, 35, 40],
-    activeUsers: [1, 2, 4, 6, 8, 10, 15, 10, 16, 22, 29, 35],
-  };
-
   const topFiveSongs = await prisma.$queryRaw`SELECT
     track.id,
     track.name,
@@ -51,8 +44,6 @@ export default async function DashboardPage() {
     5
 `;
 
-  console.log("top five songs", topFiveSongs);
-
   return (
     <div className="flex flex-col w-full min-h-screen px-8 py-4">
       <div className="gap-6 flex flex-col xl:flex-row flex-1 w-full">
@@ -65,7 +56,7 @@ export default async function DashboardPage() {
 
           <div className="flex flex-1">
             <div className="flex flex-1 max-w-[900px]">
-              <UserGrowthChart chartData={userGrowthData} />
+              <UserGrowthChart chartData={userGrowth} />
             </div>
 
             {/* <TopSongsChart chartData={topFiveSongs} />

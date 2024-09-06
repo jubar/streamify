@@ -2,14 +2,11 @@
 import { Switch } from "@nextui-org/react";
 import Prisma from "@prisma/client";
 import Chart from "chart.js/auto";
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 
-export type UserGrowthChartData = {
-  userMetrics: Prisma.UserMetrics[];
-};
-
 interface UserGrowthChartProps {
-  chartData: UserGrowthChartData;
+  chartData: Prisma.UserMetrics[];
 }
 
 const PREMIUM_USERS_LABEL = "Premium Users";
@@ -22,6 +19,26 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   const [includePremiumUsers, setIncludePremiumUsers] = useState(false);
   const [includeBasicUsers, setIncludeBasicUsers] = useState(false);
   const [includeFreeUsers, setIncludeFreeUsers] = useState(false);
+
+  const totalUserData: number[] = [];
+  const activeUserData: number[] = [];
+  const premiumUsersData: number[] = [];
+  const basicUserData: number[] = [];
+  const freeUserData: number[] = [];
+  const labels: string[] = [];
+
+  // This function assumes tht the metrics are in the correct order.
+  chartData.map((metric) => {
+    totalUserData.push(metric.totalUsers);
+    activeUserData.push(metric.activeUsers);
+    premiumUsersData.push(metric.premiumUsers);
+    basicUserData.push(metric.basicUsers);
+    freeUserData.push(metric.freeUsers);
+    const date = dayjs(`${metric.year}-${metric.month}-01`);
+    labels.push(
+      `${date.format("MMM.")} ${metric.month === 12 ? date.format(" YY") : ""}`
+    );
+  });
 
   /**
    *
@@ -76,10 +93,8 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     }
 
     if (value) {
-      const sampleData = [2, 4, 6, 8, 10, 12, 14, 7, 18, 29, 16, 24];
-      addDataSet(PREMIUM_USERS_LABEL, sampleData, "#34d399");
+      addDataSet(PREMIUM_USERS_LABEL, premiumUsersData, "#34d399");
     } else {
-      // remove the dataSet from the chartInstance
       removeDataSet(PREMIUM_USERS_LABEL);
     }
   };
@@ -92,8 +107,7 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     }
 
     if (value) {
-      const sampleData = [6, 8, 16, 21, 25, 28, 34, 25, 20, 29, 36, 40];
-      addDataSet(BASIC_USERS_LABEL, sampleData, "#fcd34d");
+      addDataSet(BASIC_USERS_LABEL, basicUserData, "#fcd34d");
     } else {
       removeDataSet(BASIC_USERS_LABEL);
     }
@@ -107,8 +121,7 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     }
 
     if (value) {
-      const sampleData = [6, 8, 9, 17, 35, 48, 44, 55, 48, 59, 66, 70];
-      addDataSet(FREE_USERS_LABEL, sampleData, "#78716c");
+      addDataSet(FREE_USERS_LABEL, freeUserData, "#78716c");
     } else {
       removeDataSet(FREE_USERS_LABEL);
     }
@@ -126,29 +139,16 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     }
 
     const data = {
-      labels: [
-        "Jan.",
-        "Feb.",
-        "Mar.",
-        "Apr.",
-        "May",
-        "Jun.",
-        "Jul.",
-        "Aug.",
-        "Sep.",
-        "Oct.",
-        "Nov.",
-        "Dec.",
-      ],
+      labels,
       datasets: [
         {
           label: "All Users",
-          data: chartData.allUsers,
+          data: totalUserData,
           borderColor: "#a78bfa",
         },
         {
           label: "Active Users",
-          data: chartData.activeUsers,
+          data: activeUserData,
           borderColor: "#f472b6",
         },
       ],
