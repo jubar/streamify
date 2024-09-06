@@ -17,29 +17,17 @@ const FREE_USERS_LABEL = "Free Users";
 export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [chartInstance, setChartInstance] = useState<Chart | null>(null);
+
   const [includePremiumUsers, setIncludePremiumUsers] = useState(false);
   const [includeBasicUsers, setIncludeBasicUsers] = useState(false);
   const [includeFreeUsers, setIncludeFreeUsers] = useState(false);
 
-  const totalUserData: number[] = [];
-  const activeUserData: number[] = [];
-  const premiumUsersData: number[] = [];
-  const basicUserData: number[] = [];
-  const freeUserData: number[] = [];
-  const labels: string[] = [];
-
-  // This function assumes tht the metrics are in the correct order.
-  chartData.map((metric) => {
-    totalUserData.push(metric.totalUsers);
-    activeUserData.push(metric.activeUsers);
-    premiumUsersData.push(metric.premiumUsers);
-    basicUserData.push(metric.basicUsers);
-    freeUserData.push(metric.freeUsers);
-    const date = dayjs(`${metric.year}-${metric.month}-01`);
-    labels.push(
-      `${date.format("MMM.")} ${metric.month === 12 ? date.format(" YY") : ""}`
-    );
-  });
+  const [totalUserData, setTotalUserData] = useState<number[]>([]);
+  const [activeUserData, setActiveUserData] = useState<number[]>([]);
+  const [premiumUsersData, setPremiumUsersData] = useState<number[]>([]);
+  const [basicUserData, setBasicUserData] = useState<number[]>([]);
+  const [freeUserData, setFreeUserData] = useState<number[]>([]);
+  const [labels, setLabels] = useState<string[]>([]);
 
   /**
    *
@@ -90,6 +78,7 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     setIncludePremiumUsers(value);
 
     if (!chartInstance) {
+      console.log("Me fui por acaaaaaaaaaaaa>>>>>>>>>>>>>>>>>>");
       return;
     }
 
@@ -130,14 +119,45 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
 
   useEffect(() => {
     Chart.register(zoomPlugin);
+    // Parse values and store them as a state variables
+    const total: number[] = [];
+    const active: number[] = [];
+    const premium: number[] = [];
+    const basic: number[] = [];
+    const free: number[] = [];
+    const texts: string[] = [];
 
+    // This function assumes tht the metrics are in the correct order.
+    chartData.map((metric) => {
+      total.push(metric.totalUsers);
+      active.push(metric.activeUsers);
+      premium.push(metric.premiumUsers);
+      basic.push(metric.basicUsers);
+      free.push(metric.freeUsers);
+      const date = dayjs(`${metric.year}-${metric.month}-01`);
+      texts.push(
+        `${date.format("MMM.")} ${
+          metric.month === 12 ? date.format(" YY") : ""
+        }`
+      );
+    });
+
+    setTotalUserData(total);
+    setActiveUserData(active);
+    setPremiumUsersData(premium);
+    setBasicUserData(basic);
+    setFreeUserData(free);
+    setLabels(texts);
+  }, [chartData]);
+
+  useEffect(() => {
     if (!canvasRef.current) {
       return;
     }
 
-    const canvas = canvasRef.current.getContext("2d");
+    const canvasCtx = canvasRef.current.getContext("2d");
 
-    if (!canvas) {
+    if (!canvasCtx) {
       return;
     }
 
@@ -158,7 +178,7 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     };
 
     let delayed = false;
-    const usersChart = new Chart(canvas, {
+    const usersChart = new Chart(canvasCtx, {
       type: "line",
       data: data,
       options: {
@@ -207,13 +227,13 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
 
     return () => {
       usersChart.destroy();
-      setChartInstance(null);
     };
-  }, []);
+  }, [totalUserData, activeUserData, labels]);
 
   return (
     <div className="flex flex-1 flex-col">
       <canvas ref={canvasRef}></canvas>
+
       <div className="flex flex-col gap-2 mt-4 bg-violet-400/30 p-4 rounded-md">
         <span className="text-md">Include additional data</span>
 
@@ -249,5 +269,3 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     </div>
   );
 }
-
-// Total de usuarios vs usarios activos por mes
