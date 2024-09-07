@@ -21,14 +21,14 @@ export default function TopSongItem({
       <Avatar
         isBordered
         radius="sm"
-        className="w-20 h-20"
+        className="w-[60px] h-[60px]"
         alt="Album cover image"
         src={albumCover}
       />
       <div className="flex flex-col flex-1 ml-4 justify-between">
         <div className="flex flex-col">
           <div className="flex flex-1 justify-between">
-            <span className="text-lg font-semibold dark:text-slate-100">
+            <span className="text-md font-semibold dark:text-slate-100">
               {song}
             </span>
             {isVerified && (
@@ -42,7 +42,7 @@ export default function TopSongItem({
               </Chip>
             )}
           </div>
-          <span className="text-md text-slate-500 dark:text-stone-300">
+          <span className="text-sm text-slate-500 dark:text-stone-300">
             {artist}
           </span>
         </div>

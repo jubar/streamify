@@ -1,22 +1,13 @@
 "use client";
-
+import Prisma from "@prisma/client";
 import Chart from "chart.js/auto";
 import { useEffect, useRef } from "react";
 
-// export type revenueChartData = {
-//   id: number;
-//   name: string;
-//   url: string;
-//   albumbId: number;
-//   artist: string;
-//   total: number;
-// };
+interface RevenueChartProps {
+  chartData: Prisma.RevenueMetrics;
+}
 
-// interface RevenueChartProps {
-//   chartData: topSongData[];
-// }
-
-export default function RevenueChart() {
+export default function RevenueChart({ chartData }: RevenueChartProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -35,16 +26,22 @@ export default function RevenueChart() {
       datasets: [
         {
           label: "Top songs",
-          data: [60, 30, 7, 3],
+          data: [
+            chartData.subscription,
+            chartData.adsRevenue,
+            chartData.merchandising,
+            chartData.tickets,
+          ],
           backgroundColor: ["#9333ea", "#f5d0fe", "#a5b4fc", "#6366f1"],
         },
       ],
     };
 
     const topSongChart = new Chart(canvas, {
-      type: "pie",
+      type: "doughnut",
       data: data,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         plugins: {
           legend: {
@@ -61,11 +58,25 @@ export default function RevenueChart() {
     return () => {
       topSongChart.destroy();
     };
-  }, []);
+  }, [
+    chartData.adsRevenue,
+    chartData.merchandising,
+    chartData.subscription,
+    chartData.tickets,
+  ]);
 
   return (
-    <div className="flex flex-1 m-h-[300px]">
-      <canvas ref={canvasRef}></canvas>
+    <div
+      style={{
+        position: "relative",
+        height: "300px",
+        width: "100%",
+        flex: "1 0 auto",
+      }}
+    >
+      <div className="absolute w-full h-[300px]">
+        <canvas ref={canvasRef}></canvas>
+      </div>
     </div>
   );
 }

@@ -1,31 +1,23 @@
 "use client";
 
+import { TopSongData } from "@/lib/api";
 import Chart from "chart.js/auto";
 import { useEffect, useRef } from "react";
 
-export type topSongData = {
-  id: number;
-  name: string;
-  url: string;
-  albumbId: number;
-  artist: string;
-  total: number;
-};
-
 interface TopSongChartProps {
-  chartData: topSongData[];
+  chartData: TopSongData[];
 }
 
 export default function TopSongsChart({ chartData }: TopSongChartProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const addEllipsis = (value: string) => {
-    if (value.length > 10) {
-      return value.slice(0, 10) + "...";
-    }
+  // const addEllipsis = (value: string) => {
+  //   if (value.length > 10) {
+  //     return value.slice(0, 10) + "...";
+  //   }
 
-    return value;
-  };
+  //   return value;
+  // };
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -40,12 +32,12 @@ export default function TopSongsChart({ chartData }: TopSongChartProps) {
 
     const data = {
       labels: chartData.map((data) => {
-        return [addEllipsis(data.name), addEllipsis(data.artist)];
+        return [data.name, data.artist];
       }),
       datasets: [
         {
           label: "Top songs",
-          data: chartData.map((data) => data.total.toString()),
+          data: chartData.map((data) => data.listens.toString()),
           backgroundColor: [
             "#9333ea",
             "#d8b4fe",
@@ -62,12 +54,14 @@ export default function TopSongsChart({ chartData }: TopSongChartProps) {
       data: data,
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
+            display: false,
             position: "top",
           },
           title: {
-            display: true,
+            display: false,
             text: "Top 5 songs",
           },
         },
@@ -80,8 +74,17 @@ export default function TopSongsChart({ chartData }: TopSongChartProps) {
   }, [chartData]);
 
   return (
-    <div className="flex flex-1 m-h-[300px]">
-      <canvas ref={canvasRef}></canvas>
+    <div
+      style={{
+        position: "relative",
+        height: "300px",
+        width: "100%",
+        flex: "1 0 auto",
+      }}
+    >
+      <div className="absolute w-full h-[300px]">
+        <canvas ref={canvasRef}></canvas>
+      </div>
     </div>
   );
 }

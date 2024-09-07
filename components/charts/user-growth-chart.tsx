@@ -14,6 +14,8 @@ const PREMIUM_USERS_LABEL = "Premium Users";
 const BASIC_USERS_LABEL = "Basic Users";
 const FREE_USERS_LABEL = "Free Users";
 
+Chart.register(zoomPlugin);
+
 export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [chartInstance, setChartInstance] = useState<Chart | null>(null);
@@ -65,7 +67,7 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
     }
 
     const dsIndex = chartInstance.data.datasets.findIndex(
-      (ds) => ds.label === PREMIUM_USERS_LABEL
+      (ds) => ds.label === label
     );
 
     if (dsIndex !== -1) {
@@ -77,11 +79,6 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   const premiumUsersHandler = (value: boolean) => {
     setIncludePremiumUsers(value);
 
-    if (!chartInstance) {
-      console.log("Me fui por acaaaaaaaaaaaa>>>>>>>>>>>>>>>>>>");
-      return;
-    }
-
     if (value) {
       addDataSet(PREMIUM_USERS_LABEL, premiumUsersData, "#34d399");
     } else {
@@ -91,10 +88,6 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
 
   const basicUsersHandler = (value: boolean) => {
     setIncludeBasicUsers(value);
-
-    if (!chartInstance) {
-      return;
-    }
 
     if (value) {
       addDataSet(BASIC_USERS_LABEL, basicUserData, "#fcd34d");
@@ -106,10 +99,6 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   const freeUsersHandler = (value: boolean) => {
     setIncludeFreeUsers(value);
 
-    if (!chartInstance) {
-      return;
-    }
-
     if (value) {
       addDataSet(FREE_USERS_LABEL, freeUserData, "#78716c");
     } else {
@@ -118,7 +107,6 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
   };
 
   useEffect(() => {
-    Chart.register(zoomPlugin);
     // Parse values and store them as a state variables
     const total: number[] = [];
     const active: number[] = [];
@@ -193,30 +181,36 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
               context.mode === "default" &&
               !delayed
             ) {
-              delay = context.dataIndex * 250 + context.datasetIndex * 100;
+              delay = context.dataIndex * 100 + context.datasetIndex * 100;
             }
             return delay;
           },
         },
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             position: "top",
           },
           title: {
-            display: true,
+            display: false,
             text: "User Metrics",
           },
           zoom: {
             zoom: {
               wheel: {
                 enabled: true,
+                speed: 0.1,
               },
               pinch: {
                 enabled: true,
               },
               mode: "x",
               scaleMode: "x",
+            },
+            pan: {
+              enabled: true,
+              mode: "x",
             },
           },
         },
@@ -232,9 +226,33 @@ export default function UserGrowthChart({ chartData }: UserGrowthChartProps) {
 
   return (
     <div className="flex flex-1 flex-col">
-      <canvas ref={canvasRef}></canvas>
+      <h3
+        role="heading"
+        className="text-slate-700 font-medium text-3xl drop-shadow-sm"
+      >
+        User growth metrics
+      </h3>
+      <p className="text-slate-600 text-md mt-4 mb-6">
+        The users growth chart provides a comprehensive visual representation of
+        key metrics related to growth of the users in the last twelve months.
+        This chart allow you to include dynamic data to understand if the growth
+        is related to a specific type of user (free, basic or premium).
+      </p>
 
-      <div className="flex flex-col gap-2 mt-4 bg-violet-400/30 p-4 rounded-md">
+      <div
+        style={{
+          position: "relative",
+          height: "400px",
+          width: "100%",
+          flex: "1 0 auto",
+        }}
+      >
+        <div className="absolute w-full h-[400px]">
+          <canvas ref={canvasRef}></canvas>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 mt-6 bg-violet-400/30 p-4 rounded-md">
         <span className="text-md">Include additional data</span>
 
         <div className="flex flex-1 items-center gap-4">
