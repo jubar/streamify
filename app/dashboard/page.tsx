@@ -1,5 +1,6 @@
 import ChartTabs from "@/components/charts/chart-tabs";
 import MainStats from "@/components/dashboard.tsx/main-stats";
+import { StreamTable } from "@/components/dashboard.tsx/stream-table";
 import TopSongs from "@/components/dashboard.tsx/top-songs";
 import TopArtist from "@/components/ui/top-artist";
 import { getTopFiveSongs, getUserGrowth } from "@/lib/api";
@@ -54,6 +55,10 @@ export default async function DashboardPage() {
                 songsData={topFiveSongs}
               />
             </div>
+
+            <div className="flex flex-1 mt-10">
+              <StreamTable />
+            </div>
           </div>
         </div>
 
@@ -68,17 +73,6 @@ export default async function DashboardPage() {
           </div>
 
           <TopSongs />
-
-          <div
-            style={{
-              position: "relative",
-              height: "350px",
-              width: "100%",
-              flex: "1 0 auto",
-            }}
-          >
-            <div className="absolute w-full h-[350px]"></div>
-          </div>
         </div>
       </div>
     </div>

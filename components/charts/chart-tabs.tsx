@@ -3,8 +3,8 @@
 import { TopSongData } from "@/lib/api";
 import { Tab, Tabs } from "@nextui-org/react";
 import Prisma from "@prisma/client";
+import MusicIcon from "../icons/music";
 import RevenueIcon from "../icons/revenue";
-import SearchIcon from "../icons/search";
 import RevenueChart from "./revenue-chart";
 import TopSongsChart from "./top-songs-chart";
 
@@ -45,7 +45,7 @@ export default function ChartTabs({
           key="songs"
           title={
             <div className="flex items-center space-x-2">
-              <SearchIcon />
+              <MusicIcon />
               <span>Top songs</span>
             </div>
           }

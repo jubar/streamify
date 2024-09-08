@@ -31,7 +31,6 @@ export type TopSongData = {
 
 // This function will be cached to use the same data
 export const getTopFiveSongs = cache(async (): Promise<TopSongData[]> => {
-  console.log("Me llamaron");
   const metrics = await prisma.$queryRaw`SELECT
       track.id,
       track.name,
