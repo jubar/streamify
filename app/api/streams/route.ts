@@ -59,18 +59,6 @@ export async function GET(request: NextRequest, context: any) {
   const skip = +page * +perPage;
   const take = parseInt(perPage);
 
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(
-    "LOS PARAMETROS ANTES DE EJECUTAR EL QUERY SON: ",
-    page,
-    perPage,
-    filter,
-    sortBy,
-    sortDirection
-  );
-
   // I need to use $queryRaw because I'm using a CTE to filter the data.
   // Prisma doesn't support CTEs and doesn't give an easy way to count total rows
   // for complex queries including nested models.
