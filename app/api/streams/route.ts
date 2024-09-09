@@ -1,6 +1,7 @@
 // The intention of this file is to give access the streams throught
 // the client pages unsing fetch requests.
 import prisma from "@/prisma/db";
+import { Prisma } from "@prisma/client";
 import { NextRequest } from "next/server";
 
 export interface StreamResponseItem {
@@ -41,12 +42,12 @@ export async function GET(request: NextRequest, context: any) {
   const page = params.get("page") || "1";
   const perPage = params.get("perPage") || "10";
   const filter = params.get("filter") || "";
-  let sortBy = params.get("sortBy") || "streamId";
+  let sortBy = params.get("sortBy") || "streamDate";
   let sortDirection = params.get("sortDirection") || "DESC";
 
-  const validSorts = ["trackName", "artistName", "streamId"];
+  const validSorts = ["trackName", "artistName", "streamDate", "userName"];
   if (!validSorts.includes(sortBy)) {
-    sortBy = "streamId";
+    sortBy = "streamDate";
   }
 
   const validSortDirections = ["ASC", "DESC"];
@@ -55,9 +56,10 @@ export async function GET(request: NextRequest, context: any) {
   }
 
   const filterValue = `%${filter}%`;
-  const sortValue = `${sortBy} ${sortDirection}`;
-  const skip = +page * +perPage;
-  const take = parseInt(perPage);
+  const field = Prisma.sql([sortBy]);
+  const direction = Prisma.sql([sortDirection]);
+  const skip = (+page * +perPage).toString();
+  const take = perPage;
 
   // I need to use $queryRaw because I'm using a CTE to filter the data.
   // Prisma doesn't support CTEs and doesn't give an easy way to count total rows
@@ -109,9 +111,9 @@ export async function GET(request: NextRequest, context: any) {
     ON
         alb.artistId = art.id
     WHERE
-        trackName LIKE ${filterValue} OR albumName LIKE ${filterValue} OR artistName LIKE ${filterValue}
+        trackName LIKE ${filterValue} OR albumName LIKE ${filterValue} OR artistName LIKE ${filterValue} 
     ORDER BY
-        ${sortValue}
+      ${field} ${direction}
 )
 
 SELECT 
@@ -122,12 +124,15 @@ FROM
 LIMIT 
     ${take}
 OFFSET 
-    ${skip};
-  `;
+    ${skip}
+`;
 
   if (data.length === 0) {
     return Response.json({ totalRows: 0, items: [] });
   }
 
-  return Response.json({ totalRows: data[0].total || 0, items: data });
+  return Response.json({
+    totalRows: data[0].total || 0,
+    items: data,
+  });
 }

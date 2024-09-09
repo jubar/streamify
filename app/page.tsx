@@ -1,40 +1,57 @@
+import Player from "@/components/dashboard.tsx/player";
+import SearchIcon from "@/components/icons/search";
 import VerifiedIcon from "@/components/icons/verified";
 import prisma from "@/prisma/db";
-import { Card, CardBody, CardHeader, Chip, Image } from "@nextui-org/react";
+import { Card, CardFooter, Image, Input } from "@nextui-org/react";
 
 export default async function Home() {
   const artist = await prisma.artist.findMany();
 
   return (
-    <div className="flex min-h-screen p-0">
-      <h1>Home page, the player</h1>
-
-      <div className="gap-6 flex flex-1 flex-wrap">
+    <div className="flex flex-col px-4 md-px-10 py-8 pb-2 min-h-screen max-h-screen overflow-hidden">
+      <div className="flex grow-0 items-center justify-center mb-10">
+        <Input
+          isClearable
+          radius="lg"
+          color="secondary"
+          size="lg"
+          className="max-w-[500px] drop-shadow-sm"
+          placeholder="What do you want to play?"
+          startContent={
+            <SearchIcon className=" size-6 text-black/50 mb-0.5 dark:text-white/90 text-slate-400 " />
+          }
+        />
+      </div>
+      <div className="flex flex-1 flex-wrap gap-6 justify-center overflow-y-auto">
         {artist.map((artist) => (
-          <Card className="py-4" key={artist.id}>
-            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-              <h4 className="font-bold text-large">{artist.name}</h4>
-              {artist.verified && (
-                <Chip
-                  size="sm"
-                  endContent={<VerifiedIcon />}
-                  variant="flat"
-                  color="secondary"
-                >
-                  <span className="hidden sm:flex">Verified</span>
-                </Chip>
-              )}
-            </CardHeader>
-            <CardBody className="overflow-visible py-2">
-              <Image
-                alt="Artist image"
-                className="object-cover rounded-xl"
-                src={artist.imageUrl}
-                width={270}
-              />
-            </CardBody>
+          <Card
+            key={artist.id}
+            isFooterBlurred
+            radius="lg"
+            className="border-none shadow-md h-[200px]"
+          >
+            <Image
+              alt={`Image for ${artist.name}`}
+              className="object-cover"
+              isZoomed
+              height={200}
+              src={artist.imageUrl}
+              width={200}
+            />
+            <CardFooter className="justify-between before:bg-white border-white/30 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] ml-1 z-10">
+              <div className="flex flex-1 items-center text-white/90">
+                {artist.verified && <VerifiedIcon className="size-6 mr-2" />}
+                <span className=" text-md shadow-sm text-ellipsis line-clamp-1">
+                  {artist.name}
+                </span>
+              </div>
+            </CardFooter>
           </Card>
         ))}
+      </div>
+
+      <div className="flex flex-1 grow-0 justify-center">
+        <Player />
       </div>
     </div>
   );

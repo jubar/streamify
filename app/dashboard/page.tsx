@@ -62,7 +62,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="flex flex-col max-w-[350px]">
+        <div className="flex flex-col max-w-full xl:max-w-[350px]">
           <div className="w-full sm:w-2/3 lg:w-3/4 xl:w-full">
             <TopArtist
               artist="La Tabare"

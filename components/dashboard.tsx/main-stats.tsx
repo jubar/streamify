@@ -1,101 +1,62 @@
-import prisma from "@/prisma/db";
+import {
+  getRevenueBySubscriptions,
+  getTotalActiveUsers,
+  getTotalStreamsThisMonth,
+  getTotalUsers,
+} from "@/lib/api";
 import dayjs from "dayjs";
 import numbro from "numbro";
 import StatsCard from "../ui/stats-card";
 
 export default async function MainStats() {
-  const totalUsers = await prisma.user.count();
-
-  // Prisma does not support count queries with distinct yet, so I'm using a raw query.
   const activeDateStg = dayjs().subtract(30, "day").toISOString();
-  const totalActiveUsers: { result: number }[] =
-    await prisma.$queryRaw`SELECT COUNT(DISTINCT userId) as result FROM Stream WHERE 'createdAt' >= ${activeDateStg}`;
 
-  const totalStreamsThisMonth = await prisma.stream.count({
-    where: {
-      createdAt: {
-        gte: dayjs().subtract(30, "day").toISOString(),
-      },
-    },
-  });
+  const totalUsers = await getTotalUsers();
+  const totalActiveUsers = await getTotalActiveUsers(activeDateStg);
+  const streamsThisMonth = await getTotalStreamsThisMonth();
+  const prevRevenue = await getRevenueBySubscriptions(false);
+  const currRevenue = await getRevenueBySubscriptions(true);
 
-  /**
-   * This function returns the revenue of the current month or the previous month.
-   * @param {boolean} thisMonth - If true, it will return the revenue of the current month. If false,
-   * it will return the revenue of the previous month.
-   * @returns {string} - The revenue formatted as a string.
-   */
-  const getRevenue = async (thisMonth: boolean) => {
-    const today = dayjs().toISOString();
-    const firstDayThisMonth = dayjs().startOf("month").toISOString();
-    const firstDayLastMonth = dayjs()
-      .subtract(1, "month")
-      .startOf("month")
-      .toISOString();
-    const lastDayLastMonth = dayjs()
-      .subtract(1, "month")
-      .endOf("month")
-      .toISOString();
-
-    const from = thisMonth ? firstDayThisMonth : firstDayLastMonth;
-    const to = thisMonth ? dayjs().toISOString() : lastDayLastMonth;
-
-    const previousSubscriptions = await prisma.userSubscription.findMany({
-      where: {
-        createdAt: {
-          gte: from,
-          lt: to,
-        },
-      },
-      include: {
-        // I'm including only the needed fields.
-        subscription: {
-          select: {
-            price: true,
-          },
-        },
-      },
-    });
-
-    const revenue = previousSubscriptions.reduce(
-      (acc, userSubscription) => acc + userSubscription.subscription.price,
-      0
-    );
-
-    return numbro(revenue).format({
-      average: true,
-      mantissa: 2,
-    });
-  };
-
-  const prevRevenue = await getRevenue(false);
-  const currRevenue = await getRevenue(true);
-  const allUsers = numbro(totalUsers).format({
+  const formattedTotalUsers = numbro(totalUsers).format({
     average: true,
     mantissa: 1,
   });
-  const activeUsers = numbro(totalActiveUsers[0].result.toString()).format({
+
+  const formattedTotalActiveUsers = numbro(totalActiveUsers).format({
     average: true,
     mantissa: 1,
+  });
+
+  const formattedstreamsThisMonth = numbro(streamsThisMonth).format({
+    thousandSeparated: true,
+  });
+
+  const formattedPrevRevenue = numbro(prevRevenue).format({
+    average: true,
+    mantissa: 2,
+  });
+
+  const formattedCurrRevenue = numbro(currRevenue).format({
+    average: true,
+    mantissa: 2,
   });
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <StatsCard
-        title={`${activeUsers} active users`}
-        subtitle={`from ${allUsers} total users`}
+        title={`${formattedTotalActiveUsers} active users`}
+        subtitle={`from ${formattedTotalUsers} total users`}
         viewAllLink="/dashboard/users"
       />
 
       <StatsCard
-        title={`$${currRevenue} Revenue this month`}
-        subtitle={`Last month, $${prevRevenue} in revenues`}
+        title={`Subscription's revenue`}
+        subtitle={`$${formattedCurrRevenue} vs $${formattedPrevRevenue} from previous month`}
       />
 
       <StatsCard
-        title={`${totalStreamsThisMonth} Streams this month`}
-        subtitle="9 millions of streams from 32 countries"
-        viewAllLink="/dashboard/streams"
+        title={`${formattedstreamsThisMonth} Streams this month`}
+        subtitle="550 more than last month"
       />
     </div>
   );

@@ -1,4 +1,4 @@
-export default function SearchIcon() {
+export default function SearchIcon(props: any) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -7,6 +7,7 @@ export default function SearchIcon() {
       strokeWidth={1.5}
       stroke="currentColor"
       className="size-6"
+      {...props}
     >
       <path
         strokeLinecap="round"
