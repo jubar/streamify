@@ -13,7 +13,7 @@ export default function StatsCard({
   viewAllLink,
 }: StatsCardProps) {
   return (
-    <Card className="flex-1 flex-col justify-between bg-violet-400/30 dark:from-purple-400 dark:to-pink-300 h-[150px] xl:h-[170px] drop-shadow-sm rounded-lg border-[1px] border-slate-100/10">
+    <Card className="relative flex-1 flex-col justify-between bg-violet-400/30 h-[150px] xl:h-[170px] drop-shadow-sm rounded-lg border-[1px] border-slate-100/10">
       <CardHeader className="flex-col !items-start">
         <h3
           role="heading"

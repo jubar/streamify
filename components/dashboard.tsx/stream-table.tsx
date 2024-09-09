@@ -54,7 +54,7 @@ export function StreamTable() {
     setIsLoading(false);
   }, [page, filterValue, sortBy, sortDirection]);
 
-  const getColorBySubscription = (subscriptionName: string) => {
+  const getColorBySubscription = useCallback((subscriptionName: string) => {
     switch (subscriptionName) {
       case "Basic":
         return "warning";
@@ -63,7 +63,7 @@ export function StreamTable() {
       default:
         return "default";
     }
-  };
+  }, []);
 
   const onSearchChange = useCallback((value: string) => {
     if (value) {

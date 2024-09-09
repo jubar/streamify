@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![alt text](https://github.com/jubar/streamify/blob/main/public/logo-with-colors.png)
 
-## Getting Started
+**Tune in. Vibe out.** Welcome to the next-generation audio streaming platform that lets you discover, stream, and enjoy music like never before. This app provides seamless access to a massive library of songs, podcasts, and live audio content with a focus on user experience, high-quality sound, and personalized recommendations.
 
-First, run the development server:
+### ⚠️ Disclaimer
+
+This project was built as a demo for an interview process and is not intended for production use. Feel free to copy, extend, or test it.
+<br /><br />
+
+## 🛠️ Tech Stack
+
+- Backend: Node.js, NextJS, Prisma and SQLite
+- Frontend: TypeScript, React, NextJS, Next UI, ChartJS and TailwindCSS
+- Test: Jest, Testing library and FakerJS
+- Deployment: Vercel platform
+
+Some facts
+
+- Logo created with AI at [Logo](https://logo.com)
+- Sample data generated with AI using [ChatGTP](https://chatgpt.com/)
+- Images picked from Spotify CDN
+
+<br /><br />
+
+## 📦 Installation
+
+1.  Clone the repository: git clone https://github.com/jubar/streamify.git
+2.  Navigate to the project directory: cd streamify
+3.  Install dependencies: npm install
+
+Create an .env file in the root directory with the DB path
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ DATABASE_URL="file:./dev.db"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create the DB in the specific path
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+$ npx prisma db push
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Populate the DB with sample data
 
-## Learn More
+```bash
+$ npx prisma db seed
+```
 
-To learn more about Next.js, take a look at the following resources:
+> 👆 This command will take 30 seconds, depending on the machine, to complete because it creates 30k records in the database.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br /><br />
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ⚡️ Start the application in dev mode
 
-## Deploy on Vercel
+Open a terminal and execute the following command:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+$ npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Open a browser with the following URL http://localhost:3000
+
+<br /><br />
+
+## Run tests
+
+In order to run the test, open a terminal and run the following command:
+
+```bash
+$ npm run test
+```
+
+A report of the test status will appear directly in the terminal.
+
+<br /><br />
+##📄 License
+
+This project is licensed under the MIT License.
