@@ -8,6 +8,7 @@ export type TopSongData = {
   url: string;
   albumbId: number;
   coverImageUrl: string;
+  artistId: number;
   artist: string;
   listens: number;
   verified: boolean;
@@ -45,6 +46,7 @@ export const getTopFiveSongs = cache(async (): Promise<TopSongData[]> => {
       track.name,
       track.url,
       track.albumId,
+      artist.id as artistId,
       artist.name as artist,
       artist.verified as verified,
       album.coverImageUrl as coverImageUrl,
@@ -155,4 +157,26 @@ export const getRevenueBySubscriptions = async (
   );
 
   return revenue;
+};
+
+/**
+ * This function returns an artist with its albums and tracks.
+ * @param {number} id - The id of the artist.
+ * @returns The artist for the given id.
+ */
+export const getArtist = async (id: number) => {
+  const artist = await prisma.artist.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      albums: {
+        include: {
+          tracks: true,
+        },
+      },
+    },
+  });
+
+  return artist;
 };

@@ -3,6 +3,7 @@ import SearchIcon from "@/components/icons/search";
 import VerifiedIcon from "@/components/icons/verified";
 import prisma from "@/prisma/db";
 import { Card, CardFooter, Image, Input } from "@nextui-org/react";
+import Link from "next/link";
 
 export default async function Home() {
   const artist = await prisma.artist.findMany();
@@ -24,29 +25,30 @@ export default async function Home() {
       </div>
       <div className="flex flex-1 flex-wrap gap-6 justify-center overflow-y-auto pb-[120px]">
         {artist.map((artist) => (
-          <Card
-            key={artist.id}
-            isFooterBlurred
-            radius="lg"
-            className="border-none shadow-md h-[200px]"
-          >
-            <Image
-              alt={`Image for ${artist.name}`}
-              className="object-cover"
-              isZoomed
-              height={200}
-              src={artist.imageUrl}
-              width={200}
-            />
-            <CardFooter className="justify-between before:bg-white border-white/30 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] ml-1 z-10">
-              <div className="flex flex-1 items-center text-white/90">
-                {artist.verified && <VerifiedIcon className="size-6 mr-2" />}
-                <span className=" text-md shadow-sm text-ellipsis line-clamp-1">
-                  {artist.name}
-                </span>
-              </div>
-            </CardFooter>
-          </Card>
+          <Link key={artist.id} href={`/artists/${artist.id}`}>
+            <Card
+              isFooterBlurred
+              radius="lg"
+              className="border-none shadow-md h-[200px]"
+            >
+              <Image
+                alt={`Image for ${artist.name}`}
+                className="object-cover"
+                isZoomed
+                height={200}
+                src={artist.imageUrl}
+                width={200}
+              />
+              <CardFooter className="justify-between before:bg-white border-white/30 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] ml-1 z-10">
+                <div className="flex flex-1 items-center text-white/90">
+                  {artist.verified && <VerifiedIcon className="size-6 mr-2" />}
+                  <span className=" text-md shadow-sm text-ellipsis line-clamp-1">
+                    {artist.name}
+                  </span>
+                </div>
+              </CardFooter>
+            </Card>
+          </Link>
         ))}
       </div>
 

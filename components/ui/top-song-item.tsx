@@ -1,8 +1,10 @@
 import { Avatar, Chip } from "@nextui-org/react";
+import Link from "next/link";
 import VerifiedIcon from "../icons/verified";
 
 interface TopSongItemProps {
   song: string;
+  artistId: number;
   artist: string;
   albumCover: string;
   isVerified: boolean;
@@ -12,6 +14,7 @@ interface TopSongItemProps {
 export default function TopSongItem({
   song,
   artist,
+  artistId,
   albumCover,
   isVerified,
   listens,
@@ -42,9 +45,12 @@ export default function TopSongItem({
               </Chip>
             )}
           </div>
-          <span className="text-sm text-slate-500 dark:text-stone-300">
+          <Link
+            href={`/artists/${artistId}`}
+            className="text-sm text-slate-500 dark:text-stone-300 hover:underline"
+          >
             {artist}
-          </span>
+          </Link>
         </div>
         <span className="text-tiny text-violet-500">
           {listens.toLocaleString()} listens

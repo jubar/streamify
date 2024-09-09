@@ -18,6 +18,7 @@ import {
 } from "@nextui-org/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import SearchIcon from "../icons/search";
 
@@ -195,11 +196,13 @@ export function StreamTable() {
           {(item) => (
             <TableRow key={item.streamId}>
               <TableCell>
-                <User
-                  avatarProps={{ radius: "lg", src: item.albumCoverImageUrl }}
-                  description={item.albumName}
-                  name={item.artistName}
-                />
+                <Link href={`/artists/${item.artistId}`}>
+                  <User
+                    avatarProps={{ radius: "lg", src: item.albumCoverImageUrl }}
+                    description={item.albumName}
+                    name={item.artistName}
+                  />
+                </Link>
               </TableCell>
               <TableCell>{item.trackName}</TableCell>
               <TableCell>{item.userName}</TableCell>

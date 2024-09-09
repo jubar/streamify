@@ -16,6 +16,7 @@ export default async function TopSongs() {
           key={song.id}
           song={song.name}
           artist={song.artist}
+          artistId={song.artistId}
           albumCover={song.coverImageUrl}
           isVerified={song.verified}
           listens={song.listens}
