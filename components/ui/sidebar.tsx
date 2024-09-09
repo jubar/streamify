@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ChartIcon from "../icons/chart";
 import CommunityIcon from "../icons/community";
-import LibraryIcon from "../icons/library";
 import MusicIcon from "../icons/music";
 import SidebarLink from "./sidebar-link";
 import UserPresence from "./user-presence";
@@ -25,22 +24,19 @@ export default function Sidebar() {
         <div className="flex flex-col flex-1">
           <div role="navigation" className="flex flex-col gap-2">
             <SidebarLink icon={<MusicIcon />} label="Home" href="/" />
-            <SidebarLink
-              icon={<LibraryIcon />}
-              label="My Library"
-              href="/library"
-            />
-            <SidebarLink
-              icon={<CommunityIcon />}
-              label="My Community"
-              href="/community"
-            />
 
             <Divider className="my-2 bg-white/30" />
+
             <SidebarLink
               icon={<ChartIcon />}
               label="Dashboard"
               href="/dashboard"
+            />
+
+            <SidebarLink
+              icon={<CommunityIcon />}
+              label="Users"
+              href="/dashboard/users"
             />
           </div>
         </div>

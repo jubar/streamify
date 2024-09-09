@@ -35,16 +35,6 @@ describe("Sidebar link component", () => {
     expect(link).toHaveClass("bg-gradient-to-t from-white/30 to-white/20");
   });
 
-  it("should apply the active style when nested routes", () => {
-    mockUsePathname.mockReturnValue("/dashboard/users");
-
-    render(<SidebarLink icon="🚀" label="Dashboard" href="/dashboard" />);
-
-    const link = screen.getByRole("link");
-
-    expect(link).toHaveClass("bg-gradient-to-t from-white/30 to-white/20");
-  });
-
   it("should apply the hover style when the path does not match", () => {
     mockUsePathname.mockReturnValue("/");
 

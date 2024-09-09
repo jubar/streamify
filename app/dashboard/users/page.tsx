@@ -1,6 +1,7 @@
 "use client";
 
 import SearchIcon from "@/components/icons/search";
+import { faker } from "@faker-js/faker";
 import {
   Chip,
   Input,
@@ -13,13 +14,58 @@ import {
   TableRow,
   User,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+
+interface User {
+  id: string;
+  avatar: string;
+  name: string;
+  email: string;
+  country: string;
+  status: "Active" | "Inactive";
+  subscription: "Basic" | "Free" | "Premium";
+}
 
 export default function UsersPage() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
+
+  const getRandomUsers = useCallback(() => {
+    const users: User[] = [];
+    for (let i = 0; i < 10; i++) {
+      users.push({
+        id: faker.string.uuid(),
+        avatar: faker.image.urlPicsumPhotos(15, 15),
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        country: faker.location.country(),
+        status: faker.helpers.arrayElement(["Active", "Inactive"]),
+        subscription: faker.helpers.arrayElement(["Basic", "Free", "Premium"]),
+      });
+    }
+    return users;
+  }, []);
+
+  const getColorBySubscription = useCallback((subscriptionName: string) => {
+    switch (subscriptionName) {
+      case "Basic":
+        return "warning";
+      case "Premium":
+        return "secondary";
+      default:
+        return "default";
+    }
+  }, []);
+
   return (
     <div className="flex flex-col w-full min-h-screen px-8 py-4">
       <h1 className="text-2xl drop-shadow-md mb-6">Users</h1>
+      <p className="text-slate-600 text-md mt-4 mb-6">
+        <strong>IMPORTANT:</strong> This page is just a mockup. It doesn't have
+        any real data, data is generated any time you enter the page.
+        <br />
+        The idea is to visually complete the experience of the dashboard.
+      </p>
+
       <div className="flex flex-col gap-3">
         <Table
           color="secondary"
@@ -53,44 +99,43 @@ export default function UsersPage() {
           }
         >
           <TableHeader>
-            <TableColumn>USER</TableColumn>
-            <TableColumn>COUNTRY</TableColumn>
-            <TableColumn>STATUS</TableColumn>
+            <TableColumn>User</TableColumn>
+            <TableColumn>Country</TableColumn>
+            <TableColumn>Status</TableColumn>
+            <TableColumn>Subscription</TableColumn>
           </TableHeader>
           <TableBody>
-            <TableRow key="1">
-              <TableCell>
-                <User
-                  avatarProps={{
-                    radius: "lg",
-                    src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-                  }}
-                  description="tonyreichert@example.com"
-                  name="Tony Reichert"
-                />
-              </TableCell>
-              <TableCell>United State</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Zoey Lang</TableCell>
-              <TableCell>China</TableCell>
-              <TableCell>
-                <Chip color="danger" size="sm">
-                  Inactive
-                </Chip>
-              </TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>Jane Fisher</TableCell>
-              <TableCell>United State</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>Julio Barrios</TableCell>
-              <TableCell>Uruguay</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
+            {getRandomUsers().map((user: User) => (
+              <TableRow key={user.id}>
+                <TableCell>
+                  <User
+                    avatarProps={{
+                      radius: "lg",
+                      src: user.avatar,
+                    }}
+                    description={user.email}
+                    name={user.name}
+                  />
+                </TableCell>
+                <TableCell>{user.country}</TableCell>
+                <TableCell>
+                  <Chip
+                    color={user.status === "Active" ? "success" : "danger"}
+                    size="sm"
+                  >
+                    {user.status}
+                  </Chip>
+                </TableCell>
+                <TableCell>
+                  <Chip
+                    color={getColorBySubscription(user.subscription)}
+                    size="sm"
+                  >
+                    {user.status}
+                  </Chip>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

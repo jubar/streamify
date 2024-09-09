@@ -59,14 +59,14 @@ export default function Player() {
           aria-label="Music progress"
           className="mx-2"
           classNames={{
-            track: "bg-default-500/30",
+            track: "bg-white/70",
             thumb: "w-2 h-2 after:w-2 after:h-2 after:bg-foreground",
           }}
           color="foreground"
           defaultValue={33}
           size="sm"
         />
-        <p className="text-tiny text-foreground/50">4:32</p>
+        <p className="text-tiny text-foreground/70">4:32</p>
       </div>
     </div>
   );

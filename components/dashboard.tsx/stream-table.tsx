@@ -141,68 +141,88 @@ export function StreamTable() {
   }, [totalPages, page]);
 
   return (
-    <Table
-      aria-label="Stream table with pagination"
-      isStriped
-      topContent={topContent}
-      bottomContent={bottomContent}
-      sortDescriptor={{
-        column: sortBy,
-        direction: sortDirection === "ASC" ? "ascending" : "descending",
-      }}
-      onSortChange={sortChangeHanlder}
-    >
-      <TableHeader>
-        <TableColumn key="artistName" allowsSorting={true}>
-          Artist
-        </TableColumn>
-        <TableColumn key="trackName" allowsSorting={true}>
-          Song
-        </TableColumn>
-        <TableColumn key="userName" allowsSorting={true}>
-          User
-        </TableColumn>
-        <TableColumn key="streamDate" allowsSorting={true}>
-          Date streamed
-        </TableColumn>
-        <TableColumn key="subscription">Subscription</TableColumn>
-      </TableHeader>
-      <TableBody
-        items={items}
-        emptyContent={"No data were found"}
-        loadingContent={<Spinner />}
-        loadingState={isLoading ? "loading" : "idle"}
+    <div className="flex flex-col">
+      <h3
+        role="heading"
+        className="text-slate-700 font-medium text-3xl drop-shadow-sm"
       >
-        {(item) => (
-          <TableRow key={item.streamId}>
-            <TableCell>
-              <User
-                avatarProps={{ radius: "lg", src: item.albumCoverImageUrl }}
-                description={item.albumName}
-                name={item.artistName}
-              />
-            </TableCell>
-            <TableCell>{item.trackName}</TableCell>
-            <TableCell>{item.userName}</TableCell>
-            <TableCell>
-              <Tooltip
-                color="secondary"
-                content={dayjs(item.streamDate).format("MMMM D, YYYY h:mm A")}
-              >
-                {dayjs(item.streamDate).fromNow()}
-              </Tooltip>
-            </TableCell>
-            <TableCell className="text-right">
-              <Chip
-                size="sm"
-                color={getColorBySubscription(item.subscriptionName)}
-              >
-                {item.subscriptionName}
-              </Chip>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        Streamed songs metrics
+      </h3>
+
+      <p className="text-slate-600 text-md mt-4 mb-6">
+        The streamed metrics provides real-time insights into key metrics
+        related on how users listen to the different artists, albums and tracks.
+        music streaming activities.The table also highlights user engagement
+        with each track and artist, along with subscription status to assess how
+        premium users interact with the platform. This visual overview helps
+        identify top-performing songs, trending artists, and active user
+        behavior, enabling data-driven decisions to optimize content and user
+        experience.
+      </p>
+
+      <Table
+        aria-label="Stream table with pagination"
+        isStriped
+        topContent={topContent}
+        bottomContent={bottomContent}
+        sortDescriptor={{
+          column: sortBy,
+          direction: sortDirection === "ASC" ? "ascending" : "descending",
+        }}
+        onSortChange={sortChangeHanlder}
+      >
+        <TableHeader>
+          <TableColumn key="artistName" allowsSorting={true}>
+            Artist
+          </TableColumn>
+          <TableColumn key="trackName" allowsSorting={true}>
+            Song
+          </TableColumn>
+          <TableColumn key="userName" allowsSorting={true}>
+            User
+          </TableColumn>
+          <TableColumn key="streamDate" allowsSorting={true}>
+            Date streamed
+          </TableColumn>
+          <TableColumn key="subscription">Subscription</TableColumn>
+        </TableHeader>
+        <TableBody
+          items={items}
+          emptyContent={"No data were found"}
+          loadingContent={<Spinner />}
+          loadingState={isLoading ? "loading" : "idle"}
+        >
+          {(item) => (
+            <TableRow key={item.streamId}>
+              <TableCell>
+                <User
+                  avatarProps={{ radius: "lg", src: item.albumCoverImageUrl }}
+                  description={item.albumName}
+                  name={item.artistName}
+                />
+              </TableCell>
+              <TableCell>{item.trackName}</TableCell>
+              <TableCell>{item.userName}</TableCell>
+              <TableCell>
+                <Tooltip
+                  color="secondary"
+                  content={dayjs(item.streamDate).format("MMMM D, YYYY h:mm A")}
+                >
+                  {dayjs(item.streamDate).fromNow()}
+                </Tooltip>
+              </TableCell>
+              <TableCell className="text-right">
+                <Chip
+                  size="sm"
+                  color={getColorBySubscription(item.subscriptionName)}
+                >
+                  {item.subscriptionName}
+                </Chip>
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

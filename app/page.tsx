@@ -8,7 +8,7 @@ export default async function Home() {
   const artist = await prisma.artist.findMany();
 
   return (
-    <div className="flex flex-col px-4 md-px-10 py-8 pb-2 min-h-screen max-h-screen overflow-hidden">
+    <div className="flex flex-col px-4 md-px-10 py-8 pb-6 min-h-screen max-h-screen overflow-hidden relative">
       <div className="flex grow-0 items-center justify-center mb-10">
         <Input
           isClearable
@@ -22,7 +22,7 @@ export default async function Home() {
           }
         />
       </div>
-      <div className="flex flex-1 flex-wrap gap-6 justify-center overflow-y-auto">
+      <div className="flex flex-1 flex-wrap gap-6 justify-center overflow-y-auto pb-[120px]">
         {artist.map((artist) => (
           <Card
             key={artist.id}
@@ -50,7 +50,7 @@ export default async function Home() {
         ))}
       </div>
 
-      <div className="flex flex-1 grow-0 justify-center">
+      <div className="w-[90%] h-[98px] left-[50%] -translate-x-[50%] rounded-lg md:rounded-full drop-shadow-lg flex justify-center absolute bottom-6 z-30 bg-purple-300/70 backdrop-blur-md ">
         <Player />
       </div>
     </div>

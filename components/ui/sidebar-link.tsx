@@ -14,11 +14,7 @@ export default function SidebarLink({ icon, label, href }: SidebarLinkProps) {
 
   let isCurrentPath = false;
 
-  if (href === "/" && pathname === href) {
-    isCurrentPath = true;
-  }
-
-  if (href !== "/" && pathname.startsWith(href)) {
+  if (pathname === href) {
     isCurrentPath = true;
   }
 
