@@ -28,19 +28,15 @@ Some facts
 2.  Navigate to the project directory: cd streamify
 3.  Install dependencies: npm install
 
-Create an .env file in the root directory with the DB path
+You can now start the server in development mode. Since this is a demo project, and to make execution easier, the `.env` file and a copy of the database are provided. The local database can be found at `/prisma/dev.db`.
+<br/><br/>
+If you want to re-create the DB you need to execute the following commands:
 
 ```bash
- DATABASE_URL="file:./dev.db"
+$ npx prisma db push --force-reset
 ```
 
-Create the DB in the specific path
-
-```bash
-$ npx prisma db push
-```
-
-Populate the DB with sample data
+then in order to populate the DB, execute:
 
 ```bash
 $ npx prisma db seed
@@ -58,11 +54,13 @@ Open a terminal and execute the following command:
 $ npm run dev
 ```
 
-Open a browser with the following URL http://localhost:3000
+Open a browser with the following URL http://localhost:3000 and you should see something like this:
 
-<br /><br />
+![alt text](https://github.com/jubar/streamify/blob/main/public/previews/home.png)
 
-## Run tests
+<br />
+
+## 🐙 Run tests
 
 In order to run the test, open a terminal and run the following command:
 
@@ -72,7 +70,8 @@ $ npm run test
 
 A report of the test status will appear directly in the terminal.
 
-<br /><br />
-##📄 License
+<br />
+
+## 📄 License
 
 This project is licensed under the MIT License.
