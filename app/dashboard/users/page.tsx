@@ -34,7 +34,7 @@ export default function UsersPage() {
     for (let i = 0; i < 10; i++) {
       users.push({
         id: faker.string.uuid(),
-        avatar: faker.image.urlPicsumPhotos(15, 15),
+        avatar: faker.image.urlPicsumPhotos({ width: 50, height: 50 }),
         name: faker.person.fullName(),
         email: faker.internet.email(),
         country: faker.location.country(),
@@ -57,7 +57,7 @@ export default function UsersPage() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full min-h-screen px-8 py-4">
+    <div className="flex flex-col w-full max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] lg:min-h-screen lg:max-h-screen px-8 py-4 overflow-hidden overflow-y-auto">
       <h1 className="text-2xl drop-shadow-md mb-6">Users</h1>
       <p className="text-slate-600 text-md mt-4 mb-6">
         <strong>IMPORTANT:</strong> This page is just a mockup. It doesn't have

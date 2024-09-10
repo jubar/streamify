@@ -1,3 +1,4 @@
+import MainNavbar from "@/components/ui/main-navbar";
 import Sidebar from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -39,8 +40,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`overflow-hidden ${inter.className}`}>
-        <main className="flex flex-1 h-screen w-full p-0 overflow-hidden">
-          <Sidebar />
+        <main className="flex flex-1 flex-col lg:flex-row h-screen w-full p-0 overflow-hidden">
+          <div className="lg:hidden">
+            <MainNavbar />
+          </div>
+          <div className="hidden lg:flex">
+            <Sidebar />
+          </div>
           <div className="border-l-[1px] border-l-pink-200 w-full min-h-screen overflow-y-auto bg-gradient-to-tl from-violet-200 to-pink-100 dark:from-zinc-900 dark:to-zinc-800">
             {children}
           </div>

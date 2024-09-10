@@ -95,7 +95,7 @@ export function StreamTable() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
-            className="w-full sm:max-w-[44%]"
+            className="w-full sm:max-w-[60%]"
             placeholder="Search by artist, album or song..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -113,7 +113,7 @@ export function StreamTable() {
       const to = from + ROWS_PER_PAGE - 1;
 
       return (
-        <div className="flex w-full flex-wrap gap-4 justify-between items-center">
+        <div className="flex w-full flex-col md:flex-row gap-4 justify-between items-center">
           <Chip
             variant="bordered"
             radius="sm"
@@ -142,7 +142,7 @@ export function StreamTable() {
   }, [totalPages, page]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex mt-10 flex-col">
       <h3
         role="heading"
         className="text-slate-700 font-medium text-3xl drop-shadow-sm"

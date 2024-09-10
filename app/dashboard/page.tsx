@@ -30,6 +30,7 @@ export default async function DashboardPage() {
   });
 
   return (
+    // <div className="flex flex-col w-full max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] lg:min-h-screen lg:max-h-screen px-8 py-4 overflow-y-auto">
     <div className="flex flex-col w-full min-h-screen px-8 py-4">
       <div className="gap-6 flex flex-col xl:flex-row flex-1 w-full">
         <div className="flex flex-col flex-1">
@@ -56,9 +57,7 @@ export default async function DashboardPage() {
               />
             </div>
 
-            <div className="flex flex-1 mt-10">
-              <StreamTable />
-            </div>
+            <StreamTable />
           </div>
         </div>
 

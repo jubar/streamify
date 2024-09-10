@@ -9,7 +9,7 @@ export default async function Home() {
   const artist = await prisma.artist.findMany();
 
   return (
-    <div className="flex flex-col px-4 md-px-10 py-8 pb-6 min-h-screen max-h-screen overflow-hidden relative">
+    <div className="flex flex-col px-4 md-px-10 py-8 pb-6 max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] lg:min-h-screen lg:max-h-screen overflow-hidden relative">
       <div className="flex grow-0 items-center justify-center mb-10">
         <Input
           isClearable
