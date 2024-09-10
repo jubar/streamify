@@ -40,7 +40,7 @@ export function StreamTable() {
     setIsLoading(true);
 
     const response = await fetch(
-      `http://localhost:3000/api/streams?page=${page}&perPage=${ROWS_PER_PAGE}&filter=${filterValue}&sortBy=${sortBy}&sortDirection=${sortDirection}`
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/streams?page=${page}&perPage=${ROWS_PER_PAGE}&filter=${filterValue}&sortBy=${sortBy}&sortDirection=${sortDirection}`
     );
     const data = await response.json();
 
