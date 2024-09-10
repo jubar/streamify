@@ -37,7 +37,6 @@ export default async function ArtistDetailPage({
       {artist.albums.map((album) => (
         <AlbumDetail
           key={album.id}
-          albumId={album.id}
           coverImageUrl={album.coverImageUrl}
           name={album.name}
           releaseOn={album.releaseOn}
