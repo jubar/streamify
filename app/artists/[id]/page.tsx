@@ -36,6 +36,7 @@ export default async function ArtistDetailPage({
       <Divider className="mb-4" />
       {artist.albums.map((album) => (
         <AlbumDetail
+          key={album.id}
           albumId={album.id}
           coverImageUrl={album.coverImageUrl}
           name={album.name}

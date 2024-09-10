@@ -4,7 +4,6 @@ import { Track } from "@prisma/client";
 import dayjs from "dayjs";
 
 interface AlbumDetailProps {
-  albumId: number;
   coverImageUrl: string;
   name: string;
   releaseOn: Date;
@@ -12,14 +11,13 @@ interface AlbumDetailProps {
 }
 
 export default function AlbumDetail({
-  albumId,
   coverImageUrl,
   name,
   releaseOn,
   tracks,
 }: AlbumDetailProps) {
   return (
-    <div key={albumId} className="flex flex-1 flex-col md:flex-row">
+    <div className="flex flex-1 flex-col md:flex-row">
       <Image
         src={coverImageUrl}
         alt={name}
