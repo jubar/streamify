@@ -42,7 +42,10 @@ export default async function MainStats() {
   });
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div
+      data-testid="main-stats"
+      className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+    >
       <StatsCard
         title={`${formattedTotalActiveUsers} active users`}
         subtitle={`from ${formattedTotalUsers} total users`}

@@ -9,7 +9,10 @@ import UserPresence from "./user-presence";
 
 export default function Sidebar() {
   return (
-    <div className="flex flex-col min-w-[300px] max-w-[300px] w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 dark:from-blue-900/80 dark:via-purple-400 dark:to-pink-700/45 min-h-screen max-h-screen relative">
+    <div
+      role="menubar"
+      className="flex flex-col min-w-[300px] max-w-[300px] w-[300px] bg-gradient-to-tr from-blue-700/80 via-purple-300 to-pink-500/25 dark:from-blue-900/80 dark:via-purple-400 dark:to-pink-700/45 min-h-screen max-h-screen relative"
+    >
       <Link href="/">
         <Image
           src="/logo.png"

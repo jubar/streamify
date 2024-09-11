@@ -31,12 +31,14 @@ export default function MainNavbar() {
 
   return (
     <Navbar
+      data-testid="topbar"
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
       className="lg:hidden bg-gradient-to-tr from-blue-500/80 via-purple-300 to-pink-500/25 max-h-[64px]"
     >
       <NavbarContent>
         <NavbarMenuToggle
+          role="button"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="lg:hidden"
         />
@@ -61,7 +63,10 @@ export default function MainNavbar() {
         />
       </NavbarContent>
 
-      <NavbarMenu className="bg-gradient-to-br from-blue-500/80 via-purple-300 to-pink-500/25 opacity-95">
+      <NavbarMenu
+        role="menu"
+        className="bg-gradient-to-br from-blue-500/80 via-purple-300 to-pink-500/25 opacity-95"
+      >
         <NavbarMenuItem>
           <SidebarLink icon={<MusicIcon />} label="Home" href="/" />
         </NavbarMenuItem>
