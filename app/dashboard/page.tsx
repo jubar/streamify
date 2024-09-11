@@ -45,7 +45,7 @@ export default async function DashboardPage() {
           <MainStats />
 
           <div className="flex flex-1 flex-col w-full mt-10">
-            <div className="flex flex-1">
+            <div className="flex flex-1" data-testid="user-growth-chart">
               <UserGrowthChartComponent chartData={userGrowth} />
             </div>
 

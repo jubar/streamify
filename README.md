@@ -11,8 +11,8 @@ This project was built as a demo for an interview process and is not intended fo
 
 - Backend: Node.js, NextJS, Prisma and SQLite
 - Frontend: TypeScript, React, NextJS, Next UI, ChartJS and TailwindCSS
-- Test: Jest, Testing library and FakerJS
-- Deployment: Vercel platform
+- Tests: Jest, Testing library and FakerJS
+- E2E tests: Playwright
 
 Some facts
 
@@ -62,13 +62,36 @@ Open a browser with the following URL http://localhost:3000 and you should see s
 
 ## 🐙 Run tests
 
-In order to run the test, open a terminal and run the following command:
+To run the tests, open a terminal and run the following command:
 
 ```bash
 $ npm run test
 ```
 
 A report of the test status will appear directly in the terminal.
+
+## Run E2E tests
+
+We don’t have a dedicated testing environment or database, so we’ll use the development server. Playwright is configured to automatically start the server if it’s not already running.
+
+To run E2E tests, open a terminal and run the following command:
+
+```bash
+$ npx playwright test
+```
+
+A report of the test status will appear directly in the terminal.
+
+<br/> 
+If you prefer to run the E2E tests in UI mode execute the following command:
+
+```bash
+$ npx playwright test --ui
+```
+
+and you can see the test player like this:
+
+![alt text](https://github.com/jubar/streamify/blob/main/public/previews/ui-mode-result.png)
 
 <br />
 

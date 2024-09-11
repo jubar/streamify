@@ -18,7 +18,10 @@ export default function ChartTabs({
   songsData,
 }: RevenueChartProps) {
   return (
-    <div className="flex w-full flex-col bg-violet-400/30 items-center px-2 py-4 rounded-md">
+    <div
+      className="flex w-full flex-col bg-violet-400/30 items-center px-2 py-4 rounded-md"
+      data-testid="metrics-chart"
+    >
       <h3 className="text-lg text-slate-700 mb-4">Metrics</h3>
       <Tabs
         aria-label="Options"

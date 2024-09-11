@@ -18,7 +18,6 @@
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
     "@prisma/client": "^5.19.1",
-    "prisma": "^5.19.1",
     "chart.js": "^4.4.4",
     "chartjs-plugin-zoom": "^2.0.1",
     "dayjs": "^1.11.13",
@@ -26,12 +25,14 @@
     "lodash": "^4.17.21",
     "next": "14.2.7",
     "numbro": "^2.5.0",
+    "prisma": "^5.19.1",
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.47.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",

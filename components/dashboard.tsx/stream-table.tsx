@@ -91,6 +91,7 @@ export function StreamTable() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between gap-3 items-end">
           <Input
+            role="searchbox"
             isClearable
             className="w-full sm:max-w-[60%]"
             placeholder="Search by artist, album or song..."
@@ -159,6 +160,7 @@ export function StreamTable() {
       </p>
 
       <Table
+        data-testid="stream-table"
         aria-label="Stream table with pagination"
         isStriped
         topContent={topContent}
@@ -185,13 +187,14 @@ export function StreamTable() {
           <TableColumn key="subscription">Subscription</TableColumn>
         </TableHeader>
         <TableBody
+          data-testid="stream-table-body"
           items={items}
           emptyContent={"No data were found"}
           loadingContent={<Spinner />}
           loadingState={isLoading ? "loading" : "idle"}
         >
           {(item) => (
-            <TableRow key={item.streamId}>
+            <TableRow role="row" key={item.streamId}>
               <TableCell>
                 <Link href={`/artists/${item.artistId}`}>
                   <User
