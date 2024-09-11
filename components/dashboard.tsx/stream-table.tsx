@@ -38,17 +38,14 @@ export function StreamTable() {
 
   const getData = useCallback(async () => {
     setIsLoading(true);
-
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/streams?page=${page}&perPage=${ROWS_PER_PAGE}&filter=${filterValue}&sortBy=${sortBy}&sortDirection=${sortDirection}`
+      `http://localhost:3000/api/streams?page=${page}&perPage=${ROWS_PER_PAGE}&filter=${filterValue}&sortBy=${sortBy}&sortDirection=${sortDirection}`
     );
     const data = await response.json();
 
     setItems(data.items);
     setTotalRows(data.totalRows);
 
-    console.log("TOTAL ROWS: ", data.totalRows);
-    console.log("TOTAL PAGES: ", Math.ceil(data.totalRows / ROWS_PER_PAGE));
     const pages = Math.ceil(data.totalRows / ROWS_PER_PAGE) ?? 0;
     setTotalPages(pages > 0 ? pages - 1 : 0);
 

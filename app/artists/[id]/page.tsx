@@ -20,10 +20,6 @@ export default async function ArtistDetailPage({
     throw new Error("Artist not found");
   }
 
-  function jsDay(releaseDate: any) {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <div className="flex flex-col p-4">
       <ArtistDetail
